@@ -242,13 +242,13 @@ bindsym $mod+Shift+KP_8 exec --no-startup-id xdotool getwindowfocus set_window -
 bindsym $mod+KP_9 [instance="scKP_9"] focus
 bindsym $mod+Shift+KP_9 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_9
 # ESPECIAL ONES
-bindsym $mod+KP_1 [instance="scKP_Divide"] focus
+bindsym $mod+KP_Divide [instance="scKP_Divide"] focus
 bindsym $mod+Shift+KP_Divide exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_Divide
-bindsym $mod+KP_1 [instance="scKP_Multiply"] focus
+bindsym $mod+KP_Multiply [instance="scKP_Multiply"] focus
 bindsym $mod+Shift+KP_Multiply exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_Multiply
-bindsym $mod+KP_1 [instance="scKP_Subtract"] focus
+bindsym $mod+KP_Subtract [instance="scKP_Subtract"] focus
 bindsym $mod+Shift+KP_Subtract exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_Subtract
-bindsym $mod+KP_1 [instance="scKP_Add"] focus
+bindsym $mod+KP_Add [instance="scKP_Add"] focus
 bindsym $mod+Shift+KP_Add exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_Add
 #
 bindsym $mod+equal [class="Xchat"] focus
