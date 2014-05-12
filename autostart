@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Set the desktop background color
+xsetroot -solid '#000000' &
+
+# Startup volume
+pactl set-sink-volume 0 '20%' &
+
+# Disable beeps
+xset -b &
+
+# Keyboard layout setting
+setxkbmap -layout br -option grp:alt_shift_toggle &
+
+# DPMS monitor setting (standby -> suspend -> off) (seconds)
+xset dpms 300 600 900 &
+
+# Set LCD brightness
+xbacklight -set 100 &
+
+# Set Background
+feh --bg-fill /home/rdini/Pictures/Space/main_spitzer20100401-full.jpg &
+
+# Screensaver
+#xscreensaver &
