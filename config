@@ -1,4 +1,4 @@
-# i3 config file (v4)
+# i3 config file (v151515151515151515151515151515)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 #
@@ -26,11 +26,37 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier $mod
 
+# define workspace to each monitor
+#
+workspace 1 output DVI-D-0
+workspace 2 output HDMI-0
+workspace 3 output DVI-I-0
+# workspace 4 output HDMI3
+# #workspace 5 output LVDS1
+#
+#
+# # Which container goes where:
+#
+# assign [class="Thunderbird"] 1
+assign [class="Hexchat"] 3
+assign [class="Gedit"] 3
+# assign [class="net-atomique-ksar-Main"] 3
+# assign [class="Pidgin"] 5
+
+
+# Layout mode for new containers | workspace_layout <default|stacking|tabbed>
+workspace_layout tabbed
+
+# Automatic back-and-forth when switching to the current workspace
+workspace_auto_back_and_forth yes
+
 # start a terminal
 bindsym $mod+Return exec konsole
+#bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym $alt+F4 kill
 
 # start dmenu (a program launcher)
 #bindsym Mod1+d exec dmenu_run
@@ -40,6 +66,8 @@ bindsym $mod+d exec --no-startup-id dmenu_run -i -b -nb '#000000' -nf '#FFFFFF' 
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+
+exec 3monitores -9
 
 # change focus
  bindsym $mod+j focus left
@@ -101,7 +129,7 @@ bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+minus workspace " "
 
  # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -115,11 +143,14 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+minus move container to workspace " "
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+bindsym $alt+Shift+KP_Subtract restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -154,15 +185,16 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+  #      status_command i3situation
+#        status_command py3status -c ~/.i3/i3status.conf
         status_command i3status
-#        status_command    py3status
-        position top
+        position bottom
     colors {
-           # Class                      border    bckgrnd    text
-           focused_workspace    #FFFF22   #000000    #FFFFFF
-           active_workspace     #777700   #222222    #5FFFFF
-           inactive_workspace   #000000   #000000    #3FF5F5
-           urgent_workspace     #C81A01   #C81A01    #FFFFFF
+           # Class border bckgrnd text
+           focused_workspace #FFFF22 #000000 #FFFFFF
+           active_workspace #777700 #222222 #5FFFFF
+           inactive_workspace #000000 #000000 #3FF5F5
+           urgent_workspace #C81A01 #C81A01 #FFFFFF
 
     }
 
@@ -170,28 +202,22 @@ bar {
 #---------------------------------------------------------------------
 ## Colours
 ##---------------------------------------------------------------------
-client.focused              #886600   #2F2F2F    #F0FFF0
-client.unfocused            #666600   #111111    #F6F600
-client.focused_inactive     #6F6F6F   #6F6F6F    #FFFFFF
-client.urgent               #C81A01   #FF0000    #FFFFFF
+client.focused #886600 #2F2F2F #F0FFF0
+client.unfocused #0ff0ff #111111 #F6F600
+client.focused_inactive #6F6F6F #6F6F6F #FFFFFF
+client.urgent #C81A01 #FF0000 #FFFFFF
 
-# Autostart
-# #  exec thunderbird
-# #   exec firefox
-# #   exec xchat
-# #   exec xscreensaver
-#
 # # Volume control
-# # # 
-bindsym $mod+comma  exec /usr/bin/pactl set-sink-volume 0 -- '-5%'
-bindsym $mod+period exec /usr/bin/pactl set-sink-volume 0 -- '+5%'
+# # #
+bindsym $mod+comma exec /usr/bin/pactl set-sink-volume 0 '-5%'
+bindsym $mod+period exec /usr/bin/pactl set-sink-volume 0 '+5%'
 #
 
-# Thinkpad buttons 
-bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume 0 -- '-5%'
-bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume 0 -- '+5%'
+# Thinkpad buttons
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume 0 '-5%'
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume 0 '+5%'
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-volume 0 0
-# bindsym XF86MonBrightnessUp exec /usr/bin/xbacklight -inc 5 
+# bindsym XF86MonBrightnessUp exec /usr/bin/xbacklight -inc 5
 # bindsym XF86MonBrightnessDown exec /usr/bin/xbacklight -dec 5
 #
 # # Start this apps
@@ -206,11 +232,10 @@ bindsym Control+Mod1+k exec i3-msg workspace 1 && i3lock -p default -d -n -c 000
 bindsym Control+Mod1+l exec xscreensaver-command -lock
 #
 # # Special Shortcuts
-bindcode 192 exec --no-startup-id /home/rdini/bin/nota01.sh
-bindcode 193 exec /usr/bin/pactl set-sink-volume 0 25%
-bindcode 194 exec /usr/bin/pactl set-sink-volume 0 50%
-bindcode 195 exec /usr/bin/pactl set-sink-volume 0 75%
-bindcode 196 exec /usr/bin/pactl set-sink-volume 0 100%
+bindsym $mod+F9 exec /usr/bin/pactl set-sink-volume 0 25%
+bindsym $mod+F10 exec /usr/bin/pactl set-sink-volume 0 50%
+bindsym $mod+F11 exec /usr/bin/pactl set-sink-volume 0 75%
+bindsym $mod+F12 exec /usr/bin/pactl set-sink-volume 0 100%
 #
 bindcode $mod+192 exec --no-startup-id xdotool getwindowfocus set_window --classname SC192
 bindcode $mod+193 exec --no-startup-id xdotool getwindowfocus set_window --classname SC193
@@ -225,16 +250,19 @@ bindsym $mod+Shift+F1 exec --no-startup-id xdotool getwindowfocus set_window --c
 # # Numpad Shortcuts:
 bindsym $mod+KP_1 [instance="scKP_1"] focus
 bindsym $mod+Shift+KP_1 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_1
-bindsym $mod+KP_2 [instance="scKP_2"] focus
-bindsym $mod+Shift+KP_2 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_2
-bindsym $mod+KP_3 [instance="scKP_3"] focus
-bindsym $mod+Shift+KP_3 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_3
+#bindsym $mod+KP_2 [instance="scKP_2"] focus
+bindsym $mod+KP_2 [instance="hexchat"] focus
+bindsym $mod+Shift+KP_2 exec --no-startup-id xdotool getwindowfocus set_window --classname hexchat
+#bindsym $mod+KP_3 [instance="scKP_3"] focus
+bindsym $mod+KP_3 [instance="gedit"] focus
+bindsym $mod+Shift+KP_3 exec --no-startup-id xdotool getwindowfocus set_window --classname gedit
 bindsym $mod+KP_4 [instance="scKP_4"] focus
 bindsym $mod+Shift+KP_4 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_4
 bindsym $mod+KP_5 [instance="scKP_5"] focus
 bindsym $mod+Shift+KP_5 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_5
-bindsym $mod+KP_6 [instance="scKP_6"] focus
-bindsym $mod+Shift+KP_6 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_6
+#bindsym $mod+KP_6 [instance="scKP_6"] focus
+bindsym $mod+KP_6 [instance="sun-awt-X11-XFramePeer"] focus
+bindsym $mod+Shift+KP_6 exec --no-startup-id xdotool getwindowfocus set_window --classname sun-awt-X11-XFramePeer
 bindsym $mod+KP_7 [instance="scKP_7"] focus
 bindsym $mod+Shift+KP_7 exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_7
 bindsym $mod+KP_8 [instance="scKP_8"] focus
@@ -250,29 +278,46 @@ bindsym $mod+KP_Subtract [instance="scKP_Subtract"] focus
 bindsym $mod+Shift+KP_Subtract exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_Subtract
 bindsym $mod+KP_Add [instance="scKP_Add"] focus
 bindsym $mod+Shift+KP_Add exec --no-startup-id xdotool getwindowfocus set_window --classname scKP_Add
+### Open the shortcuts above as I usually do
+##
+#bindsym Control+$alt+KP_1 exec firefox -P RH -no-remote http://gss.my.salesforce.com/
+bindsym Control+$alt+KP_2 exec hexchat
+bindsym Control+$alt+KP_3 exec gedit
+bindsym Control+$alt+KP_4 exec xdotool exec konsole search --sync --onlyvisible --classname "konsole" set_window --classname scKP_5
+#bindsym Control+$alt+KP_5 exec dolphin |xdotool set_window --classname scKP_5
+bindsym Control+$alt+KP_6 exec ksar
+##bindsym Control+$alt+KP_7 exec
+#bindsym Control+$alt+KP_8 exec thunderbird
+bindsym Control+$alt+KP_9 exec google-chrome-stable https://gmail.com
+bindsym Control+$alt+KP_Divide exec google-chrome-stable https://play.spotify.com/
+bindsym Control+$alt+KP_Add exec google-chrome-stable https://web.whatsapp.com/
+
+
 #
 bindsym $mod+equal [class="Xchat"] focus
-bindsym $mod+p [class="Firefox"] focus
-# # dead_acute bracketleft bracketright dead_tilde ccedilla 
-# # Raulitos keyboard specials: CODES 1~5: 192~196  FAV: 164
+bindsym $mod+p exec popcorn
+# # dead_acute bracketleft bracketright dead_tilde ccedilla
+# # Raulitos keyboard specials: CODES 1~5: 192~196 FAV: 164
 # #
 # # bindsym $mod+x exec --no-startup-id /usr/local/bin/xwinchname1
 # # bindsym $mod+z exec --no-startup-id xdotool getwindowfocus set_window --classname SC194
-bindsym $mod+z exec firefox
+bindsym $mod+Shift+z exec firefox
+bindsym $mod+z exec google-chrome-stable
 bindsym $mod+backslash exec dolphin
 bindsym $mod+Print exec ksnapshot
+#bindsym $mod+Shift+z exec firefox -P RH -no-remote
 
 # Window behavior
 for_window [class="Thunderbird"] border none
-# #for_window [class="Xchat"] border none
+for_window [class="projectM-pulseaudio"] border none
 for_window [class="Conky"] border none
 for_window [class="Msgcompose"] border none
 for_window [class="google-chrome"] border none
-for_window [class="Firefox"] border none
+#for_window [class="Firefox"] border none
 for_window [class="Firefox" window_role="Preferences"] floating enable
 for_window [class="Firefox" instance="Download"] floating enable
 for_window [title="^About"] floating enable
-for_window [class="Nautilus"] floating enable
+#for_window [class="Nautilus"] floating enable
 for_window [title="^/bin/bash$"] border none
 for_window [title="^Elluminate Live!"] floating enable
 for_window [title="^Application Sharing"] floating enable
@@ -287,6 +332,7 @@ for_window [class="Gcalctool"] floating enable
 #
 # # autostart:
 exec ~/.i3/autostart
+#exec /usr/local/bin/3monitores
 
 #######################################################################
 # automatically start i3-config-wizard to offer the user to create a
